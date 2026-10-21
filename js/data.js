@@ -31,7 +31,8 @@
  *    id / icon       锚点；icon 可以放一个 emoji，留空用默认图标
  *    name / description / tags
  *    github          仓库地址，留空显示「待添加」
- *    demo            演示视频地址，留空显示「演示录制中」
+ *    preview         演示动图路径，显示在卡片顶部，点开看原尺寸（可选）
+ *    demo            演示视频地址，留空显示「演示录制中」；有 preview 时留空就不显示
  *    wip             写 true 时标成「开发中 / In progress」（可选）
  * ===================================================================== */
 
@@ -204,6 +205,7 @@ window.TOOLS = [
     description: "Visualize the chord, pick the notes you want. Free your hands from the keyboard.",
     tags: ["MuseScore", "QML", "JavaScript"],
     github: "https://github.com/FlashGuitarYayy/chord-assist",
+    preview: "assets/tools/chord-assist.gif",
     demo: "",
   },
   {
@@ -214,6 +216,7 @@ window.TOOLS = [
     tags: ["MuseScore 4.6+", "Any model via API", "JavaScript"],
     wip: true,  // 还在开发：卡片显示「开发中 / In progress」徽章和虚线边框
     github: "https://github.com/FlashGuitarYayy/MuseScore-AI-Assistant",
+    preview: "assets/tools/musescore-ai-assistant.gif",
     demo: "",
   },
 ];

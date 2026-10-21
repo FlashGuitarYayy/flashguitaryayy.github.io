@@ -347,13 +347,22 @@
     var gh = tool.github
       ? '<a class="btn" href="' + esc(tool.github) + '" target="_blank" rel="noopener">' + ICON.github + "<span>" + esc(t("github")) + "</span>" + ICON.ext + "</a>"
       : emptyBtn(t("coming_soon"));
+    /* 有 preview 动图时它就是演示，不再显示「演示录制中」 */
     var demo = tool.demo
       ? '<a class="btn" href="' + esc(tool.demo) + '" target="_blank" rel="noopener">' + ICON.play + "<span>" + esc(t("demo")) + "</span>" + ICON.ext + "</a>"
-      : emptyBtn(t("demo_soon"));
+      : tool.preview ? "" : emptyBtn(t("demo_soon"));
+    var preview = tool.preview
+      ? '<div class="tool__media"><img src="' + esc(tool.preview) + '" alt="' + esc(L(tool.name) + " · " + t("demo")) + '" loading="lazy"></div>'
+      : "";
+    /* 标题的链接撑满整张卡片：点卡片任何地方都打开 GitHub */
+    var name = tool.github
+      ? '<a class="tool__link" href="' + esc(tool.github) + '" target="_blank" rel="noopener">' + esc(L(tool.name)) + "</a>"
+      : esc(L(tool.name));
 
     return (
       '<article class="tool' + (tool.wip ? " tool--wip" : "") + '" id="tool-' + esc(tool.id) + '">' +
-      '<div class="tool__head">' + icon + '<h3 class="tool__name">' + esc(L(tool.name)) + "</h3>" +
+      preview +
+      '<div class="tool__head">' + icon + '<h3 class="tool__name">' + name + "</h3>" +
       (tool.wip ? '<span class="tool__status">' + esc(t("wip")) + "</span>" : "") + "</div>" +
       (L(tool.description) ? '<p class="tool__desc">' + sentenceLines(L(tool.description)) + "</p>" : "") +
       (tags ? '<ul class="tags">' + tags + "</ul>" : "") +
@@ -644,7 +653,8 @@
     if (coverList) coverList.style.setProperty("--n", COVERS.length);  // 卡片数，CSS 用它把整组居中
 
     setHidden("#tools", TOOLS.length === 0);
-    setHTML("#tool-list", TOOLS.map(renderTool).join(""));
+    var toolList = setHTML("#tool-list", TOOLS.map(renderTool).join(""));
+    if (toolList) toolList.style.setProperty("--n", TOOLS.length);  // 同翻弹：卡片不够一行时整组居中
 
     setHidden("#contact", SITE.contact === false);
     setHTML("#contact-form-wrap", SITE.contact === false ? "" : renderContactForm());
